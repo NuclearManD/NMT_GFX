@@ -40,6 +40,13 @@ public:
   void end();
   void block_color(byte a, byte b);
   void line(unsigned short x1, unsigned short y1, unsigned short x2, unsigned short y2);
+  void box(unsigned short x1, unsigned short y1, unsigned short x2, unsigned short y2);
+  //void oval(unsigned short x1, unsigned short y1, unsigned short rx, unsigned short ry);
+  //void circle(unsigned short x1, unsigned short y1, unsigned short r);
+  void fill_box(unsigned short x1, unsigned short y1, unsigned short x2, unsigned short y2);
+  //void fill_oval(unsigned short x1, unsigned short y1, unsigned short rx, unsigned short ry);
+  //void fill_circle(unsigned short x1, unsigned short y1, unsigned short r);
+  void fast(unsigned short x1, unsigned short y1);
   void w_vram(unsigned short adr,byte dat);
   void sprite(unsigned short x, unsigned short y, byte rot, unsigned short adr);
   void vec_sprite(unsigned short x, unsigned short y, unsigned short s, byte rot, unsigned short adr);

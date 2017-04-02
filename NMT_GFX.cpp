@@ -94,6 +94,80 @@ void NMT_GFX::line(unsigned short x1, unsigned short y1, unsigned short x2, unsi
   _NTI_GFX_.write(y2>>8);
   _NTI_GFX_.write(y2&255);
 }
+void NMT_GFX::fill_box(unsigned short x1, unsigned short y1, unsigned short x2, unsigned short y2){
+  wait_cmd_done();
+  _NTI_GFX_.write(54);
+  _NTI_GFX_.write(x1>>8);
+  _NTI_GFX_.write(x1&255);
+  _NTI_GFX_.write(y1>>8);
+  _NTI_GFX_.write(y1&255);
+  _NTI_GFX_.write(x2>>8);
+  _NTI_GFX_.write(x2&255);
+  _NTI_GFX_.write(y2>>8);
+  _NTI_GFX_.write(y2&255);
+}
+void NMT_GFX::fast(unsigned short x1, unsigned short y1){
+  wait_cmd_done();
+  _NTI_GFX_.write(67);
+  _NTI_GFX_.write(x1>>8);
+  _NTI_GFX_.write(x1&255);
+  _NTI_GFX_.write(y1>>8);
+  _NTI_GFX_.write(y1&255);
+}
+void NMT_GFX::box(unsigned short x1, unsigned short y1, unsigned short x2, unsigned short y2){
+  line(x1,y1,x2,y1);
+  fast(x2,y2);
+  fast(x1,y2);
+  fast(x1,y1);
+}/*
+void NMT_GFX::fill_oval(unsigned short x1, unsigned short y1, unsigned short rx, unsigned short ry){
+  wait_cmd_done();
+  _NTI_GFX_.write(55);
+  _NTI_GFX_.write(x1>>8);
+  _NTI_GFX_.write(x1&255);
+  _NTI_GFX_.write(y1>>8);
+  _NTI_GFX_.write(y1&255);
+  _NTI_GFX_.write(rx>>8);
+  _NTI_GFX_.write(rx&255);
+  _NTI_GFX_.write(ry>>8);
+  _NTI_GFX_.write(ry&255);
+}
+void NMT_GFX::oval(unsigned short x1, unsigned short y1, unsigned short rx, unsigned short ry){
+  wait_cmd_done();
+  _NTI_GFX_.write(56);
+  _NTI_GFX_.write(x1>>8);
+  _NTI_GFX_.write(x1&255);
+  _NTI_GFX_.write(y1>>8);
+  _NTI_GFX_.write(y1&255);
+  _NTI_GFX_.write(rx>>8);
+  _NTI_GFX_.write(rx&255);
+  _NTI_GFX_.write(ry>>8);
+  _NTI_GFX_.write(ry&255);
+}
+void NMT_GFX::circle(unsigned short x1, unsigned short y1, unsigned short r){
+  wait_cmd_done();
+  _NTI_GFX_.write(56);
+  _NTI_GFX_.write(x1>>8);
+  _NTI_GFX_.write(x1&255);
+  _NTI_GFX_.write(y1>>8);
+  _NTI_GFX_.write(y1&255);
+  _NTI_GFX_.write(r>>8);
+  _NTI_GFX_.write(r&255);
+  _NTI_GFX_.write(r>>8);
+  _NTI_GFX_.write(r&255);
+}
+void NMT_GFX::fill_circle(unsigned short x1, unsigned short y1, unsigned short r){
+  wait_cmd_done();
+  _NTI_GFX_.write(55);
+  _NTI_GFX_.write(x1>>8);
+  _NTI_GFX_.write(x1&255);
+  _NTI_GFX_.write(y1>>8);
+  _NTI_GFX_.write(y1&255);
+  _NTI_GFX_.write(r>>8);
+  _NTI_GFX_.write(r&255);
+  _NTI_GFX_.write(r>>8);
+  _NTI_GFX_.write(r&255);
+}*/
 void NMT_GFX::w_vram(unsigned short adr,byte dat){
   wait_cmd_done();
   _NTI_GFX_.write(63);
