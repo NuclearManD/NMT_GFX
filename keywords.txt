@@ -1,0 +1,27 @@
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+Sprite		KEYWORD1
+VecSprite	KEYWORD1
+NMT_GFX		KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+block_color		KEYWORD2
+begin			KEYWORD2
+end				KEYWORD2
+line			KEYWORD2
+w_vram			KEYWORD2
+sprite			KEYWORD2
+vec_sprite		KEYWORD2
+set_color		KEYWORD2
+fill			KEYWORD2
+clear			KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
