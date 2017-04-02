@@ -44,7 +44,7 @@ void NMT_GFX::wait_cmd_done(){
 //
 void NMT_GFX::begin(){
   _NTI_GFX_.begin(115200);
-  delay(50);
+  delay(600);
   _NTI_GFX_.write('\r');            // If _NTI_GFX_ card is executing command 51 then terminate it
   for(byte i=0;i<8;i++)           // make sure all commands exit on _NTI_GFX_ card by sending a ton of junk data
     _NTI_GFX_.write('0');           // Reset _NTI_GFX_ card
