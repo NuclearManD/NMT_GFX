@@ -50,6 +50,9 @@ public:
   void print(char* x);
   void println(char* x);
   void println(StringSumHelper x);
+  void tile_color(unsigned short a, byte b);
+  byte x_tiles();
+  byte y_tiles();
   char* get_card_ver();
 };
 

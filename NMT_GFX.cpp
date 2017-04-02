@@ -44,11 +44,11 @@ void NMT_GFX::wait_cmd_done(){
 //
 void NMT_GFX::begin(){
   _NTI_GFX_.begin(115200);
-  delay(50);
+  //delay(50);
   _NTI_GFX_.write('\r');            // If _NTI_GFX_ card is executing command 51 then terminate it
   for(byte i=0;i<8;i++)           // make sure all commands exit on _NTI_GFX_ card by sending a ton of junk data
     _NTI_GFX_.write('0');           // Reset _NTI_GFX_ card
-  delay(1200);		// wait for reboot
+  //delay(500);		// wait for reboot
   set_color(1);		// run setup by setting correct color and obtaining card version
   get_card_ver();
 }
@@ -60,6 +60,27 @@ void NMT_GFX::block_color(byte a, byte b){
   _NTI_GFX_.write('=');
   _NTI_GFX_.write(a);
   _NTI_GFX_.write(b<<2);
+}
+void NMT_GFX::tile_color(unsigned short a, byte b){
+  wait_cmd_done();
+  _NTI_GFX_.write(66);
+  _NTI_GFX_.write(a>>8);
+  _NTI_GFX_.write(a&255);
+  _NTI_GFX_.write(b);
+}
+byte NMT_GFX::x_tiles(){
+  wait_cmd_done();
+  _NTI_GFX_.write(64);
+  while(!_NTI_GFX_.available());
+  return _NTI_GFX_.read();
+}
+byte NMT_GFX::y_tiles(){
+  wait_cmd_done();
+  _NTI_GFX_.write(64);
+  while(!_NTI_GFX_.available());
+  _NTI_GFX_.read();
+  while(!_NTI_GFX_.available());
+  return _NTI_GFX_.read();
 }
 void NMT_GFX::line(unsigned short x1, unsigned short y1, unsigned short x2, unsigned short y2){
   wait_cmd_done();
