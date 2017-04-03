@@ -57,7 +57,7 @@ void NMT_GFX::end(){
 }
 void NMT_GFX::block_color(byte a, byte b){
   wait_cmd_done();
-  _NTI_GFX_.write('=');
+  _NTI_GFX_.write(61);
   _NTI_GFX_.write(a);
   _NTI_GFX_.write(b<<2);
 }
@@ -201,17 +201,17 @@ void NMT_GFX::vec_sprite(unsigned short x, unsigned short y, unsigned short s, b
 }
 void NMT_GFX::clear(){
   wait_cmd_done();
-  _NTI_GFX_.write('1');
+  _NTI_GFX_.write(49);
   
 }
 void NMT_GFX::fill(byte color){
   wait_cmd_done();
-  _NTI_GFX_.write('5');
+  _NTI_GFX_.write(53);
   _NTI_GFX_.write(color);
 }
 void NMT_GFX::set_color(byte color){
   wait_cmd_done();
-  _NTI_GFX_.write('9');
+  _NTI_GFX_.write(57);
   _NTI_GFX_.write(color);
 }
 void NMT_GFX::print(char x){

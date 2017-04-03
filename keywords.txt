@@ -11,6 +11,7 @@ NMT_GFX		KEYWORD1
 #######################################
 
 block_color		KEYWORD2
+tile_color		KEYWORD2
 begin			KEYWORD2
 end				KEYWORD2
 line			KEYWORD2
@@ -19,6 +20,7 @@ sprite			KEYWORD2
 vec_sprite		KEYWORD2
 set_color		KEYWORD2
 fill			KEYWORD2
+fast			KEYWORD2
 clear			KEYWORD2
 
 #######################################
