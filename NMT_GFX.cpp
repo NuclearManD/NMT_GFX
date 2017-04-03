@@ -61,6 +61,9 @@ void NMT_GFX::block_color(byte a, byte b){
   _NTI_GFX_.write(a);
   _NTI_GFX_.write(b<<2);
 }
+byte NMT_GFX::make_color(byte r, byte g, byte b){
+  return ((r&3)<<4+(g&3)<<2+b&3)
+}
 void NMT_GFX::tile_color(unsigned short a, byte b){
   wait_cmd_done();
   _NTI_GFX_.write(66);

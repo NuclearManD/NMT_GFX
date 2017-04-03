@@ -39,7 +39,7 @@ public:
   void begin();
   void end();
   void block_color(byte a, byte b);
-  void make_color(byte r, byte g, byte b);
+  byte make_color(byte r, byte g, byte b);
   void line(unsigned short x1, unsigned short y1, unsigned short x2, unsigned short y2);
   void box(unsigned short x1, unsigned short y1, unsigned short x2, unsigned short y2);
   //void oval(unsigned short x1, unsigned short y1, unsigned short rx, unsigned short ry);
