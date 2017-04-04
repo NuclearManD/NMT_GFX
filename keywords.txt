@@ -17,7 +17,7 @@ end				KEYWORD2
 line			KEYWORD2
 w_vram			KEYWORD2
 sprite			KEYWORD2
-vec_sprite		KEYWORD2
+write_at		KEYWORD2
 set_color		KEYWORD2
 fill			KEYWORD2
 fast			KEYWORD2
@@ -27,8 +27,13 @@ fill			KEYWORD2
 pixel			KEYWORD2
 set_size		KEYWORD2
 set_center		KEYWORD2
+set_cursor_pos	KEYWORD2
+x_tiles			KEYWORD2
+y_tiles			KEYWORD2
+write_at		KEYWORD2
 get_size_x		KEYWORD2
 get_size_y		KEYWORD2
+upload			KEYWORD2
 upload			KEYWORD2
 #######################################
 # Constants (LITERAL1)
