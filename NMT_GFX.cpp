@@ -66,7 +66,7 @@ void NMT_GFX::block_color(byte a, byte b){
   _NTI_GFX_.write(b<<2);
 }
 byte NMT_GFX::make_color(byte r, byte g, byte b){
-  return ((r&3)<<4+(g&3)<<2+b&3);
+  return (((r&3)*16)+((g&3)*4)+(b&3));
 }
 void NMT_GFX::tile_color(unsigned short a, byte b){
   wait_cmd_done();
@@ -120,6 +120,12 @@ void NMT_GFX::fast(unsigned short x1, unsigned short y1){
   _NTI_GFX_.write(x1&255);
   _NTI_GFX_.write(y1>>8);
   _NTI_GFX_.write(y1&255);
+}
+void NMT_GFX::set_cursor_pos(byte x1, byte y1){
+  wait_cmd_done();
+  _NTI_GFX_.write(50);
+  _NTI_GFX_.write(x1);
+  _NTI_GFX_.write(y1);
 }
 void NMT_GFX::pixel(unsigned short x1, unsigned short y1){
   wait_cmd_done();
@@ -248,8 +254,7 @@ void NMT_GFX::print(char* x){
   for(int i=0;x[i]!=0;i++){
     if(x[i]=='\r' || x[i]=='\n'){
       tmp[loc]=0;
-      print(tmp);
-      _NTI_GFX_.write('\r');
+      println(tmp);
       wait_cmd_done();
       loc=0;
     }else{
@@ -267,10 +272,13 @@ void NMT_GFX::println(char* x){
   wait_cmd_done();
   _NTI_GFX_.write(13);
 }
-void NMT_GFX::println(StringSumHelper x){
-  print((char*)x.c_str());
+void NMT_GFX::println(char x){
+  print(x);
   wait_cmd_done();
   _NTI_GFX_.write(13);
+}
+void NMT_GFX::println(StringSumHelper x){
+  println((char*)x.c_str());
 }
 char* NMT_GFX::get_card_ver(){
   wait_cmd_done();
@@ -287,4 +295,42 @@ char* NMT_GFX::get_card_ver(){
     gfxver[i]=out.charAt(i);
   }
   return gfxver;
+}
+void NMT_GFX::println(const char* x){
+	println((char*)x);
+}
+void NMT_GFX::print(const char* x){
+	print((char*)x);
+}
+void NMT_GFX::print(StringSumHelper x){
+	print((char*)x.c_str());
+}
+void NMT_GFX::write_at(char* q, unsigned short x, unsigned short y){
+  wait_cmd_done();
+  _NTI_GFX_.write(55);
+  _NTI_GFX_.write(x>>8);
+  _NTI_GFX_.write(x&255);
+  _NTI_GFX_.write(y>>8);
+  _NTI_GFX_.write(y&255);
+  for(int i=0;q[i]!=0;i++){
+    _NTI_GFX_.write(q[i]);
+  }
+  _NTI_GFX_.write(0x0D);  // Terminate command
+  //wait_cmd_done();        // prevents this wierd memory overite glitch
+}
+void NMT_GFX::write_at(char q, unsigned short x, unsigned short y){
+  wait_cmd_done();
+  _NTI_GFX_.write(55);
+  _NTI_GFX_.write(x>>8);
+  _NTI_GFX_.write(x&255);
+  _NTI_GFX_.write(y>>8);
+  _NTI_GFX_.write(y&255);
+  _NTI_GFX_.write(q);
+  _NTI_GFX_.write(0x0D);  // Terminate command
+}
+void NMT_GFX::write_at(StringSumHelper q, unsigned short x, unsigned short y){
+	write_at((char*)q.c_str(),x,y);
+}
+void NMT_GFX::write_at(const char* q, unsigned short x, unsigned short y){
+	write_at((char*)q,x,y);
 }

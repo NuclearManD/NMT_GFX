@@ -1,7 +1,7 @@
 #include <NMT_GFX.h>
 NMT_GFX ngt;
 Sprite sprite;
-byte image[100];
+byte image[52];
 void setup(){
   ngt.begin();
   ngt.set_color(1);

@@ -48,7 +48,12 @@ public:
   //void fill_oval(unsigned short x1, unsigned short y1, unsigned short rx, unsigned short ry);
   //void fill_circle(unsigned short x1, unsigned short y1, unsigned short r);
   void fast(unsigned short x1, unsigned short y1);
+  void set_cursor_pos(byte x1, byte y1);
   void w_vram(unsigned short adr,byte dat);
+  void write_at(char* q, unsigned short x, unsigned short y);
+  void write_at(char q, unsigned short x, unsigned short y);
+  void write_at(StringSumHelper q, unsigned short x, unsigned short y);
+  void write_at(const char* q, unsigned short x, unsigned short y);
   void sprite(unsigned short x, unsigned short y, byte rot, unsigned short adr);
   void vec_sprite(unsigned short x, unsigned short y, unsigned short s, byte rot, unsigned short adr);
   void clear();
@@ -57,6 +62,10 @@ public:
   void pixel(unsigned short x, unsigned short y);
   void print(char x);
   void print(char* x);
+  void println(const char* x);
+  void print(const char* x);
+  void print(StringSumHelper x);
+  void println(char x);
   void println(char* x);
   void println(StringSumHelper x);
   void tile_color(unsigned short a, byte b);
