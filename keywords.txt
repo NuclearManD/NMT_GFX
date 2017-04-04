@@ -3,7 +3,7 @@
 #######################################
 
 Sprite		KEYWORD1
-VecSprite	KEYWORD1
+#VecSprite	KEYWORD1
 NMT_GFX		KEYWORD1
 
 #######################################
