@@ -54,6 +54,7 @@ public:
   void clear();
   void fill(byte color);
   void set_color(byte color);
+  void pixel(unsigned short x, unsigned short y);
   void print(char x);
   void print(char* x);
   void println(char* x);
@@ -63,7 +64,20 @@ public:
   byte y_tiles();
   char* get_card_ver();
 };
-
+class Sprite{
+public:
+  // public methods
+  byte* binary_image;
+  unsigned short tadr;
+  void fill(byte color);
+  void pixel(byte x, byte y, byte color);
+  void set_size(byte x, byte y);
+  void set_center(byte x, byte y);
+  byte get_size_x();
+  byte get_size_y();
+  void upload();
+  void display(unsigned short x, unsigned short y, byte rot);
+};
 // Arduino 0012 workaround
 #undef int
 #undef char
