@@ -21,9 +21,11 @@ write_at		KEYWORD2
 set_color		KEYWORD2
 fill			KEYWORD2
 fast			KEYWORD2
+box`			KEYWORD2
 clear			KEYWORD2
 binary_image	KEYWORD2
 fill			KEYWORD2
+fill_box		KEYWORD2
 pixel			KEYWORD2
 set_size		KEYWORD2
 set_center		KEYWORD2
@@ -34,7 +36,7 @@ write_at		KEYWORD2
 get_size_x		KEYWORD2
 get_size_y		KEYWORD2
 upload			KEYWORD2
-upload			KEYWORD2
+make_color		KEYWORD2
 #######################################
 # Constants (LITERAL1)
 #######################################
