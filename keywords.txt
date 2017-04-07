@@ -21,7 +21,7 @@ write_at		KEYWORD2
 set_color		KEYWORD2
 fill			KEYWORD2
 fast			KEYWORD2
-box`			KEYWORD2
+box				KEYWORD2
 clear			KEYWORD2
 binary_image	KEYWORD2
 fill			KEYWORD2

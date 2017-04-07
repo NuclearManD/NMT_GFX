@@ -22,20 +22,28 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include <SoftwareSerial.h>
 #include "Arduino.h"
 #include "NMT_GFX.h"
+
+#if defined(__AVR_ATmega328P__)
+#define AVAIL _NTI_GFX_.available()
+#define CHK_WT 300
+#else
+#define AVAIL !digitalRead(6)
+#define CHK_WT 50
+#endif
 SoftwareSerial _NTI_GFX_(6, 9); // RX, TX
 unsigned short __LS_POS__=0;
 //
 // Private methods
 //
 void __wait_cmd_done(){
-  long timer=millis()+300;
-  while(!_NTI_GFX_.available()){
+  long timer=millis()+CHK_WT;
+  while(!AVAIL){
     if(timer<millis()){
       _NTI_GFX_.write(1);
-      timer=millis()+300;
+      timer=millis()+CHK_WT;
     }
   }
-  while(_NTI_GFX_.available()){
+  while(AVAIL){
     _NTI_GFX_.read();
     delayMicroseconds(200); // For 57600+ baud, to read every last byte
   }
@@ -54,43 +62,41 @@ void NMT_GFX::begin(){
     _NTI_GFX_.write('0');           // Reset _NTI_GFX_ card
   delay(1500);		// wait for reboot
   set_color(1);		// run setup by setting correct color and obtaining card version
-  get_card_ver();
 }
 void NMT_GFX::end(){
 	_NTI_GFX_.end();
 }
 void NMT_GFX::block_color(byte a, byte b){
-  wait_cmd_done();
   _NTI_GFX_.write(61);
   _NTI_GFX_.write(a);
   _NTI_GFX_.write(b<<2);
+  wait_cmd_done();
 }
 byte NMT_GFX::make_color(byte r, byte g, byte b){
   return (((r&3)*16)+((g&3)*4)+(b&3));
 }
 void NMT_GFX::tile_color(unsigned short a, byte b){
-  wait_cmd_done();
   _NTI_GFX_.write(66);
   _NTI_GFX_.write(a>>8);
   _NTI_GFX_.write(a&255);
   _NTI_GFX_.write(b);
+  wait_cmd_done();
 }
 byte NMT_GFX::x_tiles(){
-  wait_cmd_done();
   _NTI_GFX_.write(64);
   while(!_NTI_GFX_.available());
   return _NTI_GFX_.read();
+  wait_cmd_done();
 }
 byte NMT_GFX::y_tiles(){
-  wait_cmd_done();
   _NTI_GFX_.write(64);
   while(!_NTI_GFX_.available());
   _NTI_GFX_.read();
   while(!_NTI_GFX_.available());
   return _NTI_GFX_.read();
+  wait_cmd_done();
 }
 void NMT_GFX::line(unsigned short x1, unsigned short y1, unsigned short x2, unsigned short y2){
-  wait_cmd_done();
   _NTI_GFX_.write(52);
   _NTI_GFX_.write(x1>>8);
   _NTI_GFX_.write(x1&255);
@@ -100,9 +106,9 @@ void NMT_GFX::line(unsigned short x1, unsigned short y1, unsigned short x2, unsi
   _NTI_GFX_.write(x2&255);
   _NTI_GFX_.write(y2>>8);
   _NTI_GFX_.write(y2&255);
+  wait_cmd_done();
 }
 void NMT_GFX::fill_box(unsigned short x1, unsigned short y1, unsigned short x2, unsigned short y2){
-  wait_cmd_done();
   _NTI_GFX_.write(54);
   _NTI_GFX_.write(x1>>8);
   _NTI_GFX_.write(x1&255);
@@ -112,28 +118,29 @@ void NMT_GFX::fill_box(unsigned short x1, unsigned short y1, unsigned short x2, 
   _NTI_GFX_.write(x2&255);
   _NTI_GFX_.write(y2>>8);
   _NTI_GFX_.write(y2&255);
+  wait_cmd_done();
 }
 void NMT_GFX::fast(unsigned short x1, unsigned short y1){
-  wait_cmd_done();
   _NTI_GFX_.write(67);
   _NTI_GFX_.write(x1>>8);
   _NTI_GFX_.write(x1&255);
   _NTI_GFX_.write(y1>>8);
   _NTI_GFX_.write(y1&255);
+  wait_cmd_done();
 }
 void NMT_GFX::set_cursor_pos(byte x1, byte y1){
-  wait_cmd_done();
   _NTI_GFX_.write(50);
   _NTI_GFX_.write(x1);
   _NTI_GFX_.write(y1);
+  wait_cmd_done();
 }
 void NMT_GFX::pixel(unsigned short x1, unsigned short y1){
-  wait_cmd_done();
   _NTI_GFX_.write(56);
   _NTI_GFX_.write(x1>>8);
   _NTI_GFX_.write(x1&255);
   _NTI_GFX_.write(y1>>8);
   _NTI_GFX_.write(y1&255);
+  wait_cmd_done();
 }
 void NMT_GFX::box(unsigned short x1, unsigned short y1, unsigned short x2, unsigned short y2){
   line(x1,y1,x2,y1);
@@ -194,14 +201,13 @@ void Sprite::display(unsigned short x, unsigned short y, byte rot){
 	_NTI_GFX_.write(tadr&255);
 }
 void NMT_GFX::w_vram(unsigned short adr,byte dat){
-  wait_cmd_done();
   _NTI_GFX_.write(63);
   _NTI_GFX_.write(adr>>8);
   _NTI_GFX_.write(adr&255);
   _NTI_GFX_.write(dat);
+  wait_cmd_done();
 }
 void NMT_GFX::sprite(unsigned short x, unsigned short y, byte rot, unsigned short adr){
-  wait_cmd_done();
   _NTI_GFX_.write(62);
   _NTI_GFX_.write(x>>8);
   _NTI_GFX_.write(x&255);
@@ -210,9 +216,9 @@ void NMT_GFX::sprite(unsigned short x, unsigned short y, byte rot, unsigned shor
   _NTI_GFX_.write(rot);
   _NTI_GFX_.write(adr>>8);
   _NTI_GFX_.write(adr&255);
+  wait_cmd_done();
 }
 void NMT_GFX::vec_sprite(unsigned short x, unsigned short y, unsigned short s, byte rot, unsigned short adr){
-  wait_cmd_done();
   _NTI_GFX_.write(65);
   _NTI_GFX_.write(x>>8);
   _NTI_GFX_.write(x&255);
@@ -223,39 +229,38 @@ void NMT_GFX::vec_sprite(unsigned short x, unsigned short y, unsigned short s, b
   _NTI_GFX_.write(rot);
   _NTI_GFX_.write(adr>>8);
   _NTI_GFX_.write(adr&255);
+  wait_cmd_done();
 }
 void NMT_GFX::clear(){
-  wait_cmd_done();
   _NTI_GFX_.write(49);
+  wait_cmd_done();
   
 }
 void NMT_GFX::fill(byte color){
-  wait_cmd_done();
   _NTI_GFX_.write(53);
   _NTI_GFX_.write(color);
+  wait_cmd_done();
 }
 void NMT_GFX::set_color(byte color){
-  wait_cmd_done();
   _NTI_GFX_.write(57);
   _NTI_GFX_.write(color);
+  wait_cmd_done();
 }
 void NMT_GFX::print(char x){
-  wait_cmd_done();
   if(x!='\r'||x!='\n'){
     _NTI_GFX_.write('3');
     _NTI_GFX_.write(x);
   }
   _NTI_GFX_.write('\r');
+  wait_cmd_done();
 }
 void NMT_GFX::print(char* x){
-  wait_cmd_done();
   char tmp[256];
   int loc=0;
   for(int i=0;x[i]!=0;i++){
     if(x[i]=='\r' || x[i]=='\n'){
       tmp[loc]=0;
       println(tmp);
-      wait_cmd_done();
       loc=0;
     }else{
       tmp[loc]=x[i];
@@ -266,26 +271,29 @@ void NMT_GFX::print(char* x){
   _NTI_GFX_.write('3');
   _NTI_GFX_.print(tmp);
   _NTI_GFX_.write(0x0D);  // Terminate command
+  wait_cmd_done();
 }
 void NMT_GFX::println(char* x){
   print(x);
-  wait_cmd_done();
   _NTI_GFX_.write(13);
+  wait_cmd_done();
 }
 void NMT_GFX::println(char x){
   print(x);
-  wait_cmd_done();
   _NTI_GFX_.write(13);
+  wait_cmd_done();
 }
 void NMT_GFX::println(StringSumHelper x){
   println((char*)x.c_str());
 }
 char* NMT_GFX::get_card_ver(){
-  wait_cmd_done();
+	#ifndef __AVR_ATmega328P__
+	return "NGT2x";
+	#endif
   _NTI_GFX_.write(32);
   String out="";
   while(true){
-    while(!_NTI_GFX_.available());
+    while(!AVAIL);
     char c=_NTI_GFX_.read();
     if(c=='\r')
       break;
@@ -306,7 +314,6 @@ void NMT_GFX::print(StringSumHelper x){
 	print((char*)x.c_str());
 }
 void NMT_GFX::write_at(char* q, unsigned short x, unsigned short y){
-  wait_cmd_done();
   _NTI_GFX_.write(55);
   _NTI_GFX_.write(x>>8);
   _NTI_GFX_.write(x&255);
@@ -316,10 +323,9 @@ void NMT_GFX::write_at(char* q, unsigned short x, unsigned short y){
     _NTI_GFX_.write(q[i]);
   }
   _NTI_GFX_.write(0x0D);  // Terminate command
-  //wait_cmd_done();        // prevents this wierd memory overite glitch
+  wait_cmd_done();
 }
 void NMT_GFX::write_at(char q, unsigned short x, unsigned short y){
-  wait_cmd_done();
   _NTI_GFX_.write(55);
   _NTI_GFX_.write(x>>8);
   _NTI_GFX_.write(x&255);
@@ -327,6 +333,7 @@ void NMT_GFX::write_at(char q, unsigned short x, unsigned short y){
   _NTI_GFX_.write(y&255);
   _NTI_GFX_.write(q);
   _NTI_GFX_.write(0x0D);  // Terminate command
+  wait_cmd_done();
 }
 void NMT_GFX::write_at(StringSumHelper q, unsigned short x, unsigned short y){
 	write_at((char*)q.c_str(),x,y);
