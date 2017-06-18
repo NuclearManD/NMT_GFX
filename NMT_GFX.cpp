@@ -17,20 +17,23 @@ License along with this library; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include <avr/interrupt.h>
-#include <avr/pgmspace.h>
 #include <SoftwareSerial.h>
 #include "Arduino.h"
 #include "NMT_GFX.h"
-
+#ifndef GFX_RX
+	#define GFX_RX 6
+#endif
+#ifndef GFX_TX
+	#define GFX_TX 9
+#endif
 #if defined(__AVR_ATmega328P__)
 #define AVAIL _NTI_GFX_.available()
 #define CHK_WT 300
 #else
-#define AVAIL !digitalRead(6)
+#define AVAIL !digitalRead(GFX_RX)
 #define CHK_WT 50
 #endif
-SoftwareSerial _NTI_GFX_(6, 9); // RX, TX
+SoftwareSerial _NTI_GFX_(GFX_RX, GFX_TX); // RX, TX
 unsigned short __LS_POS__=0;
 //
 // Private methods
@@ -64,7 +67,7 @@ void NMT_GFX::begin(){
   set_color(1);		// run setup by setting correct color and obtaining card version
 }
 void NMT_GFX::end(){
-	_NTI_GFX_.end();
+	//_NTI_GFX_.end();
 }
 void NMT_GFX::block_color(byte a, byte b){
   _NTI_GFX_.write(61);
@@ -288,7 +291,7 @@ void NMT_GFX::println(StringSumHelper x){
 }
 char* NMT_GFX::get_card_ver(){
 	#ifndef __AVR_ATmega328P__
-	return "NGT2x";
+	return (char*)"NGT20";
 	#endif
   _NTI_GFX_.write(32);
   String out="";
