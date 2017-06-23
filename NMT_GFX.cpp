@@ -17,23 +17,39 @@ License along with this library; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include <SoftwareSerial.h>
 #include "Arduino.h"
 #include "NMT_GFX.h"
-#ifndef GFX_RX
-	#define GFX_RX 6
-#endif
-#ifndef GFX_TX
-	#define GFX_TX 9
-#endif
-#if defined(__AVR_ATmega328P__)
-#define AVAIL _NTI_GFX_.available()
-#define CHK_WT 300
+
+
+#if defined(ARDUINO_SAM_DUE) || defined(ARDUINO_AVR_UNO) || defined(ARDUINO_AVR_MEGA2560) // We need to be a shield, Softwareserial compatible
+	#include <SoftwareSerial.h>
+	#ifndef GFX_RX
+		#define GFX_RX 6
+	#endif
+	#ifndef GFX_TX
+		#define GFX_TX 9
+	#endif
+	#if defined(__AVR_ATmega328P__)
+		#define AVAIL _NTI_GFX_.available()
+		#define CHK_WT 300
+	#else
+		#define AVAIL !digitalRead(GFX_RX)
+		#define CHK_WT 50
+	#endif
+	SoftwareSerial _NTI_GFX_(GFX_RX, GFX_TX); // RX, TX
 #else
-#define AVAIL !digitalRead(GFX_RX)
-#define CHK_WT 50
+	#if !(defined(GFX_TX)|defined(GFX_RX))                        // NOT a shield!
+		#define _NTI_GFX_ Serial1
+		#define AVAIL Serial1.available()
+		#warning "Using Serial1 for NGT20 I/O! Beware!"
+	#else
+		#error "This board currently does not support special UART pins for NTI_GFX lib. Sorry."
+	#endif
+	#define GFX_RX 0
+	#define GFX_TX 1
+	#define CHK_WT 300
 #endif
-SoftwareSerial _NTI_GFX_(GFX_RX, GFX_TX); // RX, TX
+
 unsigned short __LS_POS__=0;
 //
 // Private methods
