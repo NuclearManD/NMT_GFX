@@ -1,3 +1,4 @@
+
 /*
 NMT_GFX.cpp - graphics support for NGT20+ Nuclaer Graphics Devices
 Copyright (c) 2017 Dylan Brophy.  All rights reserved.
@@ -102,12 +103,14 @@ void NMT_GFX::tile_color(unsigned short a, byte b){
   wait_cmd_done();
 }
 byte NMT_GFX::x_tiles(){
+  return 32;
   _NTI_GFX_.write(64);
   while(!_NTI_GFX_.available());
   return _NTI_GFX_.read();
   wait_cmd_done();
 }
 byte NMT_GFX::y_tiles(){
+  return 24;
   _NTI_GFX_.write(64);
   while(!_NTI_GFX_.available());
   _NTI_GFX_.read();
