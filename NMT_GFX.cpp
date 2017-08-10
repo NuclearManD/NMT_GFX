@@ -103,14 +103,14 @@ void NMT_GFX::tile_color(unsigned short a, byte b){
   wait_cmd_done();
 }
 byte NMT_GFX::x_tiles(){
-  return 32;
+  return 16;
   _NTI_GFX_.write(64);
   while(!_NTI_GFX_.available());
   return _NTI_GFX_.read();
   wait_cmd_done();
 }
 byte NMT_GFX::y_tiles(){
-  return 24;
+  return 12;
   _NTI_GFX_.write(64);
   while(!_NTI_GFX_.available());
   _NTI_GFX_.read();
