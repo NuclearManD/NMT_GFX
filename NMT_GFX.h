@@ -31,10 +31,11 @@ class NMT_GFX
 private:
   // per object data
   // private methods
-  void wait_cmd_done();
 
 public:
   // public methods
+  void wait_cmd_done();
+  void write(byte c);
   char gfxver[16];
   void begin();
   void end();

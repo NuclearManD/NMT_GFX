@@ -102,6 +102,9 @@ void NMT_GFX::tile_color(unsigned short a, byte b){
   _NTI_GFX_.write(b);
   wait_cmd_done();
 }
+void NMT_GFX::write(byte c){
+  _NTI_GFX_.write(c);
+}
 byte NMT_GFX::x_tiles(){
   return 16;
   _NTI_GFX_.write(64);
