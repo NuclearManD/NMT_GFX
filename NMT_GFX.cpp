@@ -102,18 +102,26 @@ void NMT_GFX::tile_color(unsigned short a, byte b){
   wait_cmd_done();
 }
 byte NMT_GFX::x_tiles(){
+	#ifdef ARDUINO_AVR_MEGA2560
+		return 16;
+	#else
   _NTI_GFX_.write(64);
   while(!_NTI_GFX_.available());
   return _NTI_GFX_.read();
   wait_cmd_done();
+  #endif
 }
 byte NMT_GFX::y_tiles(){
+	#ifdef ARDUINO_AVR_MEGA2560
+		return 12;
+	#else
   _NTI_GFX_.write(64);
   while(!_NTI_GFX_.available());
   _NTI_GFX_.read();
   while(!_NTI_GFX_.available());
   return _NTI_GFX_.read();
-  wait_cmd_done();
+  #endif
+  //wait_cmd_done();
 }
 void NMT_GFX::line(unsigned short x1, unsigned short y1, unsigned short x2, unsigned short y2){
   _NTI_GFX_.write(52);
