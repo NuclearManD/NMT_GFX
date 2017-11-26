@@ -1,3 +1,4 @@
+
 /*
 NMT_GFX.cpp - graphics support for NGT20+ Nuclaer Graphics Devices
 Copyright (c) 2017 Dylan Brophy.  All rights reserved.
@@ -101,8 +102,11 @@ void NMT_GFX::tile_color(unsigned short a, byte b){
   _NTI_GFX_.write(b);
   wait_cmd_done();
 }
+void NMT_GFX::write(byte c){
+  _NTI_GFX_.write(c);
+}
 byte NMT_GFX::x_tiles(){
-	#ifdef ARDUINO_AVR_MEGA2560
+	#ifndef __AVR_ATmega328P__
 		return 16;
 	#else
   _NTI_GFX_.write(64);
@@ -112,7 +116,7 @@ byte NMT_GFX::x_tiles(){
   #endif
 }
 byte NMT_GFX::y_tiles(){
-	#ifdef ARDUINO_AVR_MEGA2560
+	#ifndef __AVR_ATmega328P__
 		return 12;
 	#else
   _NTI_GFX_.write(64);
