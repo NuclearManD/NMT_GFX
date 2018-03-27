@@ -32,7 +32,7 @@ NMT_GFX ngt;
 void setup(){
   ngt.begin();
   ngt.print("Hello!\nThis is an arduino writing\non screen with a ");
-  ngt.println(ngt.gfxver);
+  ngt.println(ngt.get_card_ver());
   delay(1200);
   ngt.println("Look, I can even do colors!");
   ngt.set_color(3);

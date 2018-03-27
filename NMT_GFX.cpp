@@ -25,19 +25,21 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #if defined(ARDUINO_SAM_DUE) || defined(ARDUINO_AVR_UNO) || defined(ARDUINO_AVR_MEGA2560) // We need to be a shield, Softwareserial compatible
 	#include <SoftwareSerial.h>
 	#ifndef GFX_RX
-		#define GFX_RX 6
+		#define GFX_RX 11
 	#endif
 	#ifndef GFX_TX
-		#define GFX_TX 9
+		#define GFX_TX 10
 	#endif
-	#if defined(__AVR_ATmega328P__)
-		#define AVAIL _NTI_GFX_.available()
-		#define CHK_WT 300
-	#else
+	#if !defined(__AVR_ATmega328P__)&&GFX_RX==6
 		#define AVAIL !digitalRead(GFX_RX)
 		#define CHK_WT 50
+	#else
+		#define AVAIL _NTI_GFX_.available()
+		#define CHK_WT 300
 	#endif
+	#ifndef _NTI_GFX_
 	SoftwareSerial _NTI_GFX_(GFX_RX, GFX_TX); // RX, TX
+	#endif
 #else
 	#if !(defined(GFX_TX)|defined(GFX_RX))                        // NOT a shield!
 		#define _NTI_GFX_ Serial1
@@ -318,21 +320,23 @@ void NMT_GFX::println(StringSumHelper x){
   println((char*)x.c_str());
 }
 char* NMT_GFX::get_card_ver(){
-	#ifndef __AVR_ATmega328P__
+	#if !defined(__AVR_ATmega328P__)&&GFX_RX==6
 	return (char*)"NGT20";
 	#endif
+	delay(16);
+  while(AVAIL)
+	_NTI_GFX_.read();
   _NTI_GFX_.write(32);
-  String out="";
+  int index=0;
   while(true){
     while(!AVAIL);
     char c=_NTI_GFX_.read();
-    if(c=='\r')
+    if(c==13)
       break;
-    out+=c;
+    gfxver[index]=c;
+	index++;
   }
-  for(byte i=0;i<out.length();i++){
-    gfxver[i]=out.charAt(i);
-  }
+  gfxver[index]=0;
   return gfxver;
 }
 void NMT_GFX::println(const char* x){
