@@ -233,6 +233,15 @@ void Sprite::display(unsigned short x, unsigned short y, byte rot){
 	_NTI_GFX_.write(tadr>>8);
 	_NTI_GFX_.write(tadr&255);
 }
+
+void NMT_GFX::w_vram_long(unsigned short adr,int32_t dat){
+	w_vram_word(adr,dat&65535);
+	w_vram_word(adr+2,dat>>16);
+}
+void NMT_GFX::w_vram_word(unsigned short adr,int16_t dat){
+	w_vram(adr,dat&255);
+	w_vram(adr+1,dat>>8);
+}
 void NMT_GFX::w_vram(unsigned short adr,byte dat){
   _NTI_GFX_.write(63);
   _NTI_GFX_.write(adr>>8);

@@ -50,7 +50,9 @@ public:
   //void fill_circle(unsigned short x1, unsigned short y1, unsigned short r);
   void fast(unsigned short x1, unsigned short y1);
   void set_cursor_pos(byte x1, byte y1);
-  void w_vram(unsigned short adr,byte dat);
+  void w_vram(unsigned short adr,uint8_t dat);
+  void w_vram_long(unsigned short adr,int32_t dat);
+  void w_vram_word(unsigned short adr,int16_t dat);
   void write_at(char* q, unsigned short x, unsigned short y);
   void write_at(char q, unsigned short x, unsigned short y);
   void write_at(StringSumHelper q, unsigned short x, unsigned short y);
