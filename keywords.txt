@@ -18,6 +18,9 @@ line			KEYWORD2
 w_vram			KEYWORD2
 w_vram_long		KEYWORD2
 w_vram_word		KEYWORD2
+render_3d		KEYWORD2
+add_line		KEYWORD2
+del_line		KEYWORD2
 sprite			KEYWORD2
 write_at		KEYWORD2
 set_color		KEYWORD2

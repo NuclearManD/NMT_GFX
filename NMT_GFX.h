@@ -21,6 +21,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define NMT_GFX_h
 
 #include <inttypes.h>
+#include <SoftwareSerial.h>
 
 #ifndef GCC_VERSION
 #define GCC_VERSION (__GNUC__ * 10000 + __GNUC_MINOR__ * 100 + __GNUC_PATCHLEVEL__)
@@ -29,15 +30,17 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 class NMT_GFX
 {
 private:
-  // per object data
-  // private methods
+  uint16_t line_index;
+  SoftwareSerial* _NTI_GFX_;
 
 public:
+  unsigned short __LS_POS__;
   // public methods
   void wait_cmd_done();
   void write(byte c);
   char gfxver[16];
   void begin();
+  void NMT_GFX::begin(int rx, int tx);
   void end();
   void block_color(byte a, byte b);
   byte make_color(byte r, byte g, byte b);
@@ -51,6 +54,12 @@ public:
   void fast(unsigned short x1, unsigned short y1);
   void set_cursor_pos(byte x1, byte y1);
   void w_vram(unsigned short adr,uint8_t dat);
+  
+  uint16_t add_line(long x1,long y1,long z1,long x2,long y2,long z2);
+  void del_line(uint16_t id);
+  
+  void render_3d();
+  
   void w_vram_long(unsigned short adr,int32_t dat);
   void w_vram_word(unsigned short adr,int16_t dat);
   void write_at(char* q, unsigned short x, unsigned short y);
@@ -87,8 +96,8 @@ public:
   void set_center(byte x, byte y);
   byte get_size_x();
   byte get_size_y();
-  void upload();
-  void display(unsigned short x, unsigned short y, byte rot);
+  void upload(NMT_GFX* ser);
+  void display(unsigned short x, unsigned short y, byte rot,NMT_GFX* ser);
 };
 // Arduino 0012 workaround
 #undef int
