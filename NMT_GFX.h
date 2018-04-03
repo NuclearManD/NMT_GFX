@@ -60,6 +60,9 @@ public:
   
   void render_3d();
   
+  void translatef(long x,long y, long z);
+  void rotatef(uint16_t yaw, uint16_t pitch);
+  
   void w_vram_long(unsigned short adr,int32_t dat);
   void w_vram_word(unsigned short adr,int16_t dat);
   void write_at(char* q, unsigned short x, unsigned short y);

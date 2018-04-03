@@ -95,10 +95,38 @@ uint16_t NMT_GFX::add_line(long x1,long y1,long z1,long x2,long y2,long z2){
 	return line_index-1;
 }
 void NMT_GFX::del_line(uint16_t id){
+	_NTI_GFX_->write(105);
+	_NTI_GFX_->write(id);
+	
 	wait_cmd_done();
 }
 
 void NMT_GFX::render_3d(){
+	_NTI_GFX_->write(100);
+	wait_cmd_done();
+}
+void NMT_GFX::translatef(long x,long y, long z){
+	_NTI_GFX_->write(102);
+	_NTI_GFX_->write(x>>24);
+	_NTI_GFX_->write((x>>16)&255);
+	_NTI_GFX_->write((x>>8)&255);
+	_NTI_GFX_->write(x&255);
+	_NTI_GFX_->write(y>>24);
+	_NTI_GFX_->write((y>>16)&255);
+	_NTI_GFX_->write((y>>8)&255);
+	_NTI_GFX_->write(y&255);
+	_NTI_GFX_->write(z>>24);
+	_NTI_GFX_->write((z>>16)&255);
+	_NTI_GFX_->write((z>>8)&255);
+	_NTI_GFX_->write(z&255);
+	wait_cmd_done();
+}
+void NMT_GFX::rotatef(uint16_t yaw, uint16_t pitch){
+	_NTI_GFX_->write(103);
+	_NTI_GFX_->write(yaw>>8);
+	_NTI_GFX_->write(yaw&255);
+	_NTI_GFX_->write(pitch>>8);
+	_NTI_GFX_->write(pitch&255);
 	wait_cmd_done();
 }
 
