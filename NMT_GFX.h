@@ -55,10 +55,11 @@ public:
   void set_cursor_pos(byte x1, byte y1);
   void w_vram(unsigned short adr,uint8_t dat);
   
-  uint16_t add_line(long x1,long y1,long z1,long x2,long y2,long z2);
+  uint16_t add_line(long x1,long y1,long z1,long x2,long y2,long z2,uint8_t color);
   void del_line(uint16_t id);
   
   void render_3d();
+  void frame_3d();
   
   void translatef(long x,long y, long z);
   void rotatef(uint16_t yaw, uint16_t pitch);

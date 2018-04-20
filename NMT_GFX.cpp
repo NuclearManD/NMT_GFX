@@ -78,7 +78,7 @@ void NMT_GFX::tile_color(unsigned short a, byte b){
 	wait_cmd_done();
 }
 
-uint16_t NMT_GFX::add_line(long x1,long y1,long z1,long x2,long y2,long z2){
+uint16_t NMT_GFX::add_line(long x1,long y1,long z1,long x2,long y2,long z2,uint8_t color){
 	w_vram_long(__LS_POS__, x1);
 	w_vram_long(__LS_POS__+4, y1);
 	w_vram_long(__LS_POS__+8, z1);
@@ -86,9 +86,9 @@ uint16_t NMT_GFX::add_line(long x1,long y1,long z1,long x2,long y2,long z2){
 	w_vram_long(__LS_POS__+16,y2);
 	w_vram_long(__LS_POS__+20,z2);
 	_NTI_GFX_->write(104);
-	_NTI_GFX_->write(__LS_POS__&255);
-	_NTI_GFX_->write(__LS_POS__>>8);
 	_NTI_GFX_->write(line_index);
+	_NTI_GFX_->write((__LS_POS__>>8)|((uint16_t)color<<5));
+	_NTI_GFX_->write(__LS_POS__&255);
 	line_index++;
 	__LS_POS__+=24;
 	wait_cmd_done();
@@ -103,6 +103,10 @@ void NMT_GFX::del_line(uint16_t id){
 
 void NMT_GFX::render_3d(){
 	_NTI_GFX_->write(100);
+	wait_cmd_done();
+}
+void NMT_GFX::frame_3d(){
+	_NTI_GFX_->write(106);
 	wait_cmd_done();
 }
 void NMT_GFX::translatef(long x,long y, long z){
