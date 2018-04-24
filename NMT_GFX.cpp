@@ -276,7 +276,7 @@ void NMT_GFX::print(char x){
 	wait_cmd_done();
 }
 void NMT_GFX::print(char* x){
-	char tmp[256];
+	char tmp[16];
 	int loc=0;
 	for(int i=0;x[i]!=0;i++){
 		if(x[i]=='\r' || x[i]=='\n'){
@@ -286,6 +286,13 @@ void NMT_GFX::print(char* x){
 		}else{
 			tmp[loc]=x[i];
 			loc++;
+		}
+		if(loc==15){
+			tmp[loc]=0;
+			_NTI_GFX_->write('3');
+			_NTI_GFX_->print(tmp);
+			_NTI_GFX_->write(0x0D);	// Terminate command
+			loc=0;
 		}
 	}
 	tmp[loc]=0;
