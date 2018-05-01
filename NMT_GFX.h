@@ -40,7 +40,7 @@ public:
   void write(byte c);
   char gfxver[16];
   void begin();
-  void NMT_GFX::begin(int rx, int tx);
+  void begin(int rx, int tx);
   void end();
   void block_color(byte a, byte b);
   byte make_color(byte r, byte g, byte b);
