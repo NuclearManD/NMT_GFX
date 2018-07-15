@@ -19,9 +19,9 @@ void setup(){
   sprite.pixel(4,3,1);
   sprite.pixel(3,4,2);
   sprite.pixel(4,4,3);
-  sprite.upload();
+  sprite.upload(&ngt);
   // Display sprite at 50,60 at a 0 degree angle
-  sprite.display(50,60,0);
+  sprite.display(50,60,0,&ngt);
 }
 void loop(){
 }
