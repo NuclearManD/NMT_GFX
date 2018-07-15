@@ -2,49 +2,49 @@
 # Datatypes (KEYWORD1)
 #######################################
 
-Sprite		KEYWORD1
+Sprite	KEYWORD1
 #VecSprite	KEYWORD1
-NMT_GFX		KEYWORD1
+NMT_GFX	KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)
 #######################################
 
-block_color		KEYWORD2
-tile_color		KEYWORD2
-begin			KEYWORD2
-end				KEYWORD2
-line			KEYWORD2
-w_vram			KEYWORD2
-translatef		KEYWORD2
-rotatef			KEYWORD2
-w_vram_long		KEYWORD2
-w_vram_word		KEYWORD2
-render_3d		KEYWORD2
-frame_3d		KEYWORD2
-add_line		KEYWORD2
-del_line		KEYWORD2
-sprite			KEYWORD2
-write_at		KEYWORD2
-set_color		KEYWORD2
-fill			KEYWORD2
-fast			KEYWORD2
-box				KEYWORD2
-clear			KEYWORD2
+block_color	KEYWORD2
+tile_color	KEYWORD2
+begin	KEYWORD2
+end	KEYWORD2
+line	KEYWORD2
+w_vram	KEYWORD2
+translatef	KEYWORD2
+rotatef	KEYWORD2
+w_vram_long	KEYWORD2
+w_vram_word	KEYWORD2
+render_3d	KEYWORD2
+frame_3d	KEYWORD2
+add_line	KEYWORD2
+del_line	KEYWORD2
+sprite	KEYWORD2
+write_at	KEYWORD2
+set_color	KEYWORD2
+fill	KEYWORD2
+fast	KEYWORD2
+box	KEYWORD2
+clear	KEYWORD2
 binary_image	KEYWORD2
-fill			KEYWORD2
-fill_box		KEYWORD2
-pixel			KEYWORD2
-set_size		KEYWORD2
-set_center		KEYWORD2
+fill	KEYWORD2
+fill_box	KEYWORD2
+pixel	KEYWORD2
+set_size	KEYWORD2
+set_center	KEYWORD2
 set_cursor_pos	KEYWORD2
-x_tiles			KEYWORD2
-y_tiles			KEYWORD2
-write_at		KEYWORD2
-get_size_x		KEYWORD2
-get_size_y		KEYWORD2
-upload			KEYWORD2
-make_color		KEYWORD2
+x_tiles	KEYWORD2
+y_tiles	KEYWORD2
+write_at	KEYWORD2
+get_size_x	KEYWORD2
+get_size_y	KEYWORD2
+upload	KEYWORD2
+make_color	KEYWORD2
 #######################################
 # Constants (LITERAL1)
 #######################################
