@@ -38,6 +38,9 @@ public:
   // public methods
   void wait_cmd_done();
   void write(byte c);
+  int available();
+  byte read();
+  bool is_connected();
   char gfxver[16];
   void begin();
   void begin(int rx, int tx);

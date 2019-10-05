@@ -25,9 +25,31 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA	02110-1301	USA
 
 #define AVAIL _NTI_GFX_->available()
 #define CHK_WT 300
-//
-// Private methods
-//
+
+
+int NMT_GFX::available(){
+	return _NTI_GFX_->available();
+}
+byte NMT_GFX::read(){
+	return _NTI_GFX_->read();
+}
+bool NMT_GFX::is_connected(){
+	long timer=millis()+500;
+	while(AVAIL)read();
+	write(32);
+	while(!AVAIL){
+		if(timer<millis()){
+			_NTI_GFX_->write(1);
+			timer=millis()+CHK_WT;
+		}
+	}
+	while(AVAIL){
+		_NTI_GFX_->read();
+		delayMicroseconds(250); // For 57600+ baud, to read every last byte
+	}
+	return true;
+}
+
 void NMT_GFX::wait_cmd_done(){
 	long timer=millis()+CHK_WT;
 	while(!AVAIL){
